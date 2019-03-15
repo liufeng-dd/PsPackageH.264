@@ -21,19 +21,19 @@ int make_ps_Header(char *pData,int nSrc)
 
     memset(bitBuffer.pData, 0, PS_HEAD_LEN);
     bits_write( &bitBuffer, 32, 0x000001BA);			/* start codes */
-	bits_write( &bitBuffer, 2, 	1);						/* marker bits '01b' */
+    bits_write( &bitBuffer, 2, 	1);						/* marker bits '01b' */
     bits_write( &bitBuffer, 3, 	(nSrc>>30)&0x07);		/* System clock [32..30] */
-	bits_write( &bitBuffer, 1, 	1);						/* marker bit */
+    bits_write( &bitBuffer, 1, 	1);						/* marker bit */
     bits_write( &bitBuffer, 15, (nSrc>>15)&0x7FFF);		/* System clock [29..15] */
-	bits_write( &bitBuffer, 1, 	1);						/* marker bit */
+    bits_write( &bitBuffer, 1, 	1);						/* marker bit */
     bits_write( &bitBuffer, 15, nSrc&0x7fff);			/* System clock [29..15] */
-	bits_write( &bitBuffer, 1, 	1);						/* marker bit */
-	bits_write( &bitBuffer, 9, 	1);			            /* System clock [14..0] */
-	bits_write( &bitBuffer, 1, 	1);						/* marker bit */
-	bits_write( &bitBuffer, 22, (MAX_RATE)&0x3fffff);	/* bit rate(n units of 50 bytes per second.) */
-	bits_write( &bitBuffer, 2, 	3);						/* marker bits '11' */
-	bits_write( &bitBuffer, 5, 	0x1f);					/* reserved(reserved for future use) */
-	bits_write( &bitBuffer, 3, 	0);
+    bits_write( &bitBuffer, 1, 	1);						/* marker bit */
+    bits_write( &bitBuffer, 9, 	1);			            /* System clock [14..0] */
+    bits_write( &bitBuffer, 1, 	1);						/* marker bit */
+    bits_write( &bitBuffer, 22, (MAX_RATE)&0x3fffff);	/* bit rate(n units of 50 bytes per second.) */
+    bits_write( &bitBuffer, 2, 	3);						/* marker bits '11' */
+    bits_write( &bitBuffer, 5, 	0x1f);					/* reserved(reserved for future use) */
+    bits_write( &bitBuffer, 3, 	0);
    
     return 1;
 
@@ -59,28 +59,28 @@ int make_psm_Header(char *pData)
 
     memset(bitBuffer.pData,0,PSM_HEAD_LEN);
     bits_write( &bitBuffer, 24,0x000001);	/* start code */
-	bits_write( &bitBuffer, 8, 0xBC);		/* map stream id */
-	bits_write( &bitBuffer, 16,18);			/* program stream map length */ 
-	bits_write( &bitBuffer, 1, 1);			/* current next indicator */
-	bits_write( &bitBuffer, 2, 3);			/* reserved */
-	bits_write( &bitBuffer, 5, 0); 			/* program stream map version */
+    bits_write( &bitBuffer, 8, 0xBC);		/* map stream id */
+    bits_write( &bitBuffer, 16,18);			/* program stream map length */ 
+    bits_write( &bitBuffer, 1, 1);			/* current next indicator */
+    bits_write( &bitBuffer, 2, 3);			/* reserved */
+    bits_write( &bitBuffer, 5, 0); 			/* program stream map version */
     bits_write( &bitBuffer, 7, 0x7F);		/* reserved */
-	bits_write( &bitBuffer, 1, 1);			/* marker bit */
-	bits_write( &bitBuffer, 16,0); 			/* programe stream info length */
-	bits_write( &bitBuffer, 16, 8); 		/* elementary stream map length	is */
+    bits_write( &bitBuffer, 1, 1);			/* marker bit */
+    bits_write( &bitBuffer, 16,0); 			/* programe stream info length */
+    bits_write( &bitBuffer, 16, 8); 		/* elementary stream map length	is */
 	/*audio*/
     bits_write( &bitBuffer, 8, 0x90);       /* stream_type */
     bits_write( &bitBuffer, 8, 0xC0);		/* elementary_stream_id */
-	bits_write( &bitBuffer, 16, 0); 		/* elementary_stream_info_length is */
+    bits_write( &bitBuffer, 16, 0); 		/* elementary_stream_info_length is */
 	/*video*/
     bits_write( &bitBuffer, 8, 0x1B);       /* stream_type */
     bits_write( &bitBuffer, 8, 0xE0);		/* elementary_stream_id */
-	bits_write( &bitBuffer, 16, 0); 		/* elementary_stream_info_length  */
+    bits_write( &bitBuffer, 16, 0); 		/* elementary_stream_info_length  */
 	/*crc (2e b9 0f 3d)*/
-	bits_write( &bitBuffer, 8, 0x2E);		/* crc (24~31) bits */
-	bits_write( &bitBuffer, 8, 0xB9);		/* crc (16~23) bits */
-	bits_write( &bitBuffer, 8, 0x0F);		/* crc (8~15) bits */
-	bits_write( &bitBuffer, 8, 0x3D);		/* crc (0~7) bits */
+    bits_write( &bitBuffer, 8, 0x2E);		/* crc (24~31) bits */
+    bits_write( &bitBuffer, 8, 0xB9);		/* crc (16~23) bits */
+    bits_write( &bitBuffer, 8, 0x0F);		/* crc (8~15) bits */
+    bits_write( &bitBuffer, 8, 0x3D);		/* crc (0~7) bits */
 
     return 1;
 
@@ -109,7 +109,7 @@ int make_Sys_Header(char *pData)
     bits_write( &bitBuffer, 32, 0x000001BB);	/*start code*/
     bits_write( &bitBuffer, 16, SYS_HEAD_LEN-6);/* header_length */
     bits_write( &bitBuffer, 1,	 1);            /* marker_bit */
-	bits_write( &bitBuffer, 22, 50000);		    /* rate_bound */
+    bits_write( &bitBuffer, 22, 50000);		    /* rate_bound */
     bits_write( &bitBuffer, 1,  1);				/* marker_bit */
     bits_write( &bitBuffer, 6,  1);				/* audio_bound */
     bits_write( &bitBuffer, 1,  0);				/* fixed_flag */
@@ -157,39 +157,39 @@ int make_pes_Header(char *pData,int nStreamId, int nSrcLen, int nPts, int nDts)
 
     memset(bitBuffer.pData,0,PES_HEAD_LEN);
     bits_write( &bitBuffer, 24,0x000001);	    /* start code */
-	bits_write( &bitBuffer, 8, (nStreamId));	/* streamID */
-	bits_write( &bitBuffer, 16,(nSrcLen)+13);	/* packet_len */ 
-	bits_write( &bitBuffer, 2, 2 );		/* '10' */
-	bits_write( &bitBuffer, 2, 0 );		/* scrambling_control */
-	bits_write( &bitBuffer, 1, 0 );		/* priority */
-	bits_write( &bitBuffer, 1, 0 );		/* data_alignment_indicator */
-	bits_write( &bitBuffer, 1, 0 );		/* copyright */
-	bits_write( &bitBuffer, 1, 0 );		/* original_or_copy */
-	bits_write( &bitBuffer, 1, 1 );		/* PTS_flag */
-	bits_write( &bitBuffer, 1, 1 );		/* DTS_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* ESCR_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* ES_rate_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* DSM_trick_mode_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* additional_copy_info_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* PES_CRC_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* PES_extension_flag */
-	bits_write( &bitBuffer, 8, 10);		/* header_data_length */ 
+    bits_write( &bitBuffer, 8, (nStreamId));	/* streamID */
+    bits_write( &bitBuffer, 16,(nSrcLen)+13);	/* packet_len */ 
+    bits_write( &bitBuffer, 2, 2 );		/* '10' */
+    bits_write( &bitBuffer, 2, 0 );		/* scrambling_control */
+    bits_write( &bitBuffer, 1, 0 );		/* priority */
+    bits_write( &bitBuffer, 1, 0 );		/* data_alignment_indicator */
+    bits_write( &bitBuffer, 1, 0 );		/* copyright */
+    bits_write( &bitBuffer, 1, 0 );		/* original_or_copy */
+    bits_write( &bitBuffer, 1, 1 );		/* PTS_flag */
+    bits_write( &bitBuffer, 1, 1 );		/* DTS_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* ESCR_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* ES_rate_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* DSM_trick_mode_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* additional_copy_info_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* PES_CRC_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* PES_extension_flag */
+    bits_write( &bitBuffer, 8, 10);		/* header_data_length */ 
 	
 	/*PTS,DTS*/	
     bits_write( &bitBuffer, 4, 3 );						/* "001" */
     bits_write( &bitBuffer, 3, ((nPts)>>30)&0x07 );     /* PTS[32..30] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     bits_write( &bitBuffer, 15,((nPts)>>15)&0x7FFF);    /* PTS[29..15] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     bits_write( &bitBuffer, 15,(nPts)&0x7FFF);          /* PTS[14..0] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     bits_write( &bitBuffer, 4, 1 );						/* "0001" */
     bits_write( &bitBuffer, 3, ((nDts)>>30)&0x07 );     /* DTS[32..30] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     bits_write( &bitBuffer, 15,((nDts)>>15)&0x7FFF);    /* DTS[29..15] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     bits_write( &bitBuffer, 15,(nDts)&0x7FFF);          /* DTS[14..0] */
-	bits_write( &bitBuffer, 1, 1 );
+    bits_write( &bitBuffer, 1, 1 );
     return 1;
 
 }
@@ -216,23 +216,23 @@ int make_pes_Header2(char *pData,int nStreamId, int nSrcLen)
 
     memset(bitBuffer.pData,0,PES_HEAD_LEN - 7); //12个字节长度
     bits_write( &bitBuffer, 24,0x000001);		/* start code */
-	bits_write( &bitBuffer, 8, (nStreamId));	/* streamID */
-	bits_write( &bitBuffer, 16,(nSrcLen)+6);	/* packet_len */ 
-	bits_write( &bitBuffer, 2, 2 );		/* "10" */
-	bits_write( &bitBuffer, 2, 0 );		/* scrambling_control */
-	bits_write( &bitBuffer, 1, 1 );		/* priority */
-	bits_write( &bitBuffer, 1, 0 );		/* data_alignment_indicator */
-	bits_write( &bitBuffer, 1, 0 );		/* copyright */
-	bits_write( &bitBuffer, 1, 0 );		/* original_or_copy */
-	bits_write( &bitBuffer, 1, 1 );		/* PTS_flag */
-	bits_write( &bitBuffer, 1, 1 );		/* DTS_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* ESCR_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* ES_rate_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* DSM_trick_mode_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* additional_copy_info_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* PES_CRC_flag */
-	bits_write( &bitBuffer, 1, 0 );		/* PES_extension_flag */
-	bits_write( &bitBuffer, 8, 3);		/* header_data_length */ 
+    bits_write( &bitBuffer, 8, (nStreamId));	/* streamID */
+    bits_write( &bitBuffer, 16,(nSrcLen)+6);	/* packet_len */ 
+    bits_write( &bitBuffer, 2, 2 );		/* "10" */
+    bits_write( &bitBuffer, 2, 0 );		/* scrambling_control */
+    bits_write( &bitBuffer, 1, 1 );		/* priority */
+    bits_write( &bitBuffer, 1, 0 );		/* data_alignment_indicator */
+    bits_write( &bitBuffer, 1, 0 );		/* copyright */
+    bits_write( &bitBuffer, 1, 0 );		/* original_or_copy */
+    bits_write( &bitBuffer, 1, 1 );		/* PTS_flag */
+    bits_write( &bitBuffer, 1, 1 );		/* DTS_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* ESCR_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* ES_rate_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* DSM_trick_mode_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* additional_copy_info_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* PES_CRC_flag */
+    bits_write( &bitBuffer, 1, 0 );		/* PES_extension_flag */
+    bits_write( &bitBuffer, 8, 3);		/* header_data_length */ 
 
     bits_write( &bitBuffer, 8, 0xFF);
     bits_write( &bitBuffer, 8, 0xFF);
