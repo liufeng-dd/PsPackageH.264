@@ -241,6 +241,12 @@ int make_pes_Header2(char *pData,int nStreamId, int nSrcLen)
     return 1;
 }
 
+/**
+ * @remark：    剔除厂家头部信息（获取多余头部长度）
+ * @param ：    pData     [in]厂家提供的数据流
+ *              nLen      [in]流的数据长度
+ */
+
 int PackStream::ExcludeHeader(char *pData, int nLen)
 {
     if(NULL == pData || nLen <= 0)
@@ -261,6 +267,7 @@ int PackStream::ExcludeHeader(char *pData, int nLen)
 
     return -1;
 }
+
 
 int PackStream::GetHeaderLength(char *pData, int nLen)
 {
